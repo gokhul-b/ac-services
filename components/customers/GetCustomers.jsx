@@ -1,16 +1,21 @@
 import { db } from "@firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import React from "react";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 const GetCustomers = async () => {
   const querySnapshot = await getDocs(collection(db, "customers"));
+  let data = []
+  console.log("------------------------------")
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
     console.log(doc.id, " => ", doc.data());
+    data.push(doc.data())
   });
+  console.log("------------------------------")
   return (
     <div>
-      <h1>All Customers</h1>
+      <DataTable columns={columns} data={data}/>
     </div>
   );
 };

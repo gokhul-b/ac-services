@@ -1,4 +1,3 @@
-"use client";
 
 import AddCustomer from "@components/addCustomer";
 import GetCustomers from "@components/customers/GetCustomers";
