@@ -24,6 +24,7 @@ import {
   SelectItem,
   SelectContent,
 } from "./ui/select";
+import { addBill } from "@app/action";
 
 function AddBill({ customer }) {
   const [open, setOpen] = useState(false);
@@ -42,9 +43,10 @@ function AddBill({ customer }) {
 
   const handleSubmit = async () => {
     try {
-      const docRef = await addDoc(collection(db, "bills"), form);
+      console.log(form);
+      const docRef = await addBill("bills", form);
       console.log("Form submitted successfully!");
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef);
       setForm({
         customerId: "",
         date: "",

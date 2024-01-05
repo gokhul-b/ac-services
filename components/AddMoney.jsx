@@ -11,14 +11,15 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { db } from "@firebase/firebase";
+import { addBill } from "@app/action";
 
 const AddMoney = ({ wallet }) => {
   const form = wallet.form;
   const handleSubmit = async () => {
     try {
-      const docRef = await addDoc(collection(db, "wallets"), form);
+      const docRef = await addBill("wallets", form);
       console.log("Form submitted successfully!");
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef);
       window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error.message);
