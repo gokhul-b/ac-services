@@ -13,9 +13,7 @@ function Header() {
             <AvatarFallback>AC</AvatarFallback>
           </Avatar>
           <div className="border-r-2 pr-4">
-            <h1 className="sm:font-medium font-normal sm:text-lg text-sm">
-              Aasai Cashews
-            </h1>
+            <h1 className="font-semibold sm:text-lg text-sm ">Aasai Cashews</h1>
             <p className="text-sm text-muted-foreground text-start">Services</p>
           </div>
           <div>

@@ -43,8 +43,8 @@ const CustomerCard = async ({ customer }) => {
 
   dueAmt = totalAmount - parseInt(totalWalletAmount);
   return (
-    <div className="sm:flex md:flex-row flex-col border shadow-md sm:mx-36 sm:py-5 sm:px-5 px-2.5 py-2 sm:mt-8 mt-4 mx-2">
-      <div className="w-full sm:px-4 sm:py-4 px-2 py-2">
+    <div className="sm:flex sm:flex-row sm:justify-between flex-col border shadow-md sm:mx-36 sm:py-5 sm:px-5 px-2.5 py-2 sm:mt-8 mt-4 mx-2">
+      <div className="sm:px-4 sm:py-4 px-2 py-2">
         <h1 className="font-bold sm:text-2xl text-lg sm:pb-8 pb-2 text-blue-700">
           Customer overview:
         </h1>

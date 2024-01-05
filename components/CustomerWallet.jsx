@@ -78,17 +78,18 @@ const CustomerWallet = ({ customer }) => {
                 className="col-span-3"
               />
             </div>
-            <div className="sm:flex sm:space-x-4 items-center grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Method</Label>
               <Select
                 name="method"
                 id="method"
+                className="col-span-3"
                 value={form.method}
                 onValueChange={(val) => {
                   setForm({ ...form, method: val });
                 }}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[170px]">
                   <SelectValue placeholder="Payment method" />
                 </SelectTrigger>
                 <SelectContent>
