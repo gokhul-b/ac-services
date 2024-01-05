@@ -1,58 +1,47 @@
 "use client";
 import { Button } from "@components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-export const columns = [
+export const walletColumns = [
   {
-    accessorKey: "name",
+    accessorKey: "date",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
+
   {
-    accessorKey: "phone",
+    accessorKey: "method",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          //   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Phone Number
+          Payment Method
         </Button>
       );
     },
   },
   {
-    accessorKey: "place",
+    accessorKey: "amount",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Place
+          Amount
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
-  // {
-  //   accessorKey: "customerId",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Bill
-  //       </Button>
-  //     );
-  //   },
-  // },
 ];

@@ -17,13 +17,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AddCustomer from "@components/AddCustomer";
-import AddBill from "@components/AddBill";
-import ViewMore from "@components/ViewMore";
+import { Input } from "@components/ui/input";
 
-export function DataTable({ columns, data }) {
+export function WalletTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const table = useReactTable({
@@ -45,14 +42,13 @@ export function DataTable({ columns, data }) {
     <div>
       <div className="flex items-center py-4 space-x-4">
         <Input
-          placeholder="Filter Names..."
-          value={table.getColumn("name")?.getFilterValue() ?? ""}
+          placeholder="Filter Date..."
+          value={table.getColumn("date")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("date")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-        <AddCustomer />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -71,7 +67,6 @@ export function DataTable({ columns, data }) {
                     </TableHead>
                   );
                 })}
-                <TableHead className="text-center">Bill</TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -90,17 +85,6 @@ export function DataTable({ columns, data }) {
                       )}
                     </TableCell>
                   ))}
-                  <TableCell>
-                    <AddBill
-                      customer={{
-                        cid: row.original.customerId,
-                        name: row.original.name,
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <ViewMore customer={{ cid: row.original.customerId }} />
-                  </TableCell>
                 </TableRow>
               ))
             ) : (

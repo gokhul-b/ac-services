@@ -6,16 +6,13 @@ import { columns } from "./columns";
 
 const GetCustomers = async () => {
   const querySnapshot = await getDocs(collection(db, "customers"));
-  let data = []
-  console.log("------------------------------")
+  let data = [];
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-    data.push(doc.data())
+    data.push(doc.data());
   });
-  console.log("------------------------------")
   return (
     <div>
-      <DataTable columns={columns} data={data}/>
+      <DataTable columns={columns} data={data} />
     </div>
   );
 };

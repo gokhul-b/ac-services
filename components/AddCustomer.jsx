@@ -28,11 +28,9 @@ function AddCustomer() {
   });
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    console.log(form);
   };
   const handleSubmit = async () => {
     try {
-      console.log(form);
       const docRef = await addDoc(collection(db, "customers"), form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef.id);
