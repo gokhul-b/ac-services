@@ -37,7 +37,7 @@ function AddCustomer() {
       console.log("Document written with ID: ", docRef);
       setForm({ name: "", phone: "", place: "", customerId: "" });
       setOpen(false);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }

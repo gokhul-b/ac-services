@@ -10,6 +10,7 @@ export const addToDB = async (name, form) => {
 };
 export const addMoneyToWallet = async (name, id, form) => {
   const docRef = await addDoc(collection(db, name), form);
+  revalidatePath("/service");
   revalidatePath(`/service/${id}`);
   return docRef.id;
 };

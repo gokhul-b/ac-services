@@ -56,7 +56,7 @@ function AddBill({ customer }) {
         total: "",
       });
       setOpen(false);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }
