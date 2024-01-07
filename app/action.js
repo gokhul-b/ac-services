@@ -2,14 +2,14 @@
 
 import { db } from "@firebase/firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 export const addToDB = async (name, form) => {
   const docRef = await addDoc(collection(db, name), form);
-  revalidateTag("service");
+  revalidatePath("/service");
   return docRef.id;
 };
 export const addMoneyToWallet = async (name, id, form) => {
   const docRef = await addDoc(collection(db, name), form);
-  revalidateTag(`service/${id}`);
+  revalidatePath(`service/${id}`);
   return docRef.id;
 };
