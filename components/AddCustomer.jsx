@@ -16,7 +16,7 @@ import { Input } from "./ui/input";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@firebase/firebase";
 import { v4 as cid } from "uuid";
-import { addBill } from "@app/action";
+import { addToDB } from "@app/action";
 
 function AddCustomer() {
   const uid = cid();
@@ -32,7 +32,7 @@ function AddCustomer() {
   };
   const handleSubmit = async () => {
     try {
-      const docRef = await addBill("customers", form);
+      const docRef = await addToDB("customers", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
       setForm({ name: "", phone: "", place: "", customerId: "" });
