@@ -17,7 +17,7 @@ const AddMoney = ({ wallet }) => {
   const form = wallet.form;
   const handleSubmit = async () => {
     try {
-      const docRef = await addMoneyToWallet("wallets", form);
+      const docRef = await addMoneyToWallet("wallets", form.customerId, form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
       window.location.reload();
