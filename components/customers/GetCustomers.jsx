@@ -8,7 +8,10 @@ const GetCustomers = async () => {
   const querySnapshot = await getDocs(collection(db, "customers"));
   let data = [];
   querySnapshot.forEach((doc) => {
-    data.push(doc.data());
+    let temp = doc.data();
+    temp.id = doc.id;
+    data.push(temp);
+    // console.log(data);
   });
   return (
     <div>

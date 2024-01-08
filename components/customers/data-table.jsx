@@ -93,13 +93,14 @@ export function DataTable({ columns, data }) {
                   <TableCell>
                     <AddBill
                       customer={{
-                        cid: row.original.customerId,
+                        cid: row.original.id,
                         name: row.original.name,
+                        variant: "outline",
                       }}
                     />
                   </TableCell>
                   <TableCell>
-                    <ViewMore customer={{ cid: row.original.customerId }} />
+                    <ViewMore customer={{ cid: row.original.id }} />
                   </TableCell>
                 </TableRow>
               ))

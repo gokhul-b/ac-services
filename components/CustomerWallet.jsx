@@ -104,7 +104,9 @@ const CustomerWallet = ({ customer }) => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button onClick={handleClear}>Clear</Button>
+          <Button className="bg-red-500 hover:bg-red-400" onClick={handleClear}>
+            Clear
+          </Button>
           <AddMoney wallet={{ form }} />
         </CardFooter>
       </Card>

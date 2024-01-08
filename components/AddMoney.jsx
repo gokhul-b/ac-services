@@ -26,7 +26,7 @@ const AddMoney = ({ wallet }) => {
   return (
     <div>
       <AlertDialog>
-        <AlertDialogTrigger className="border px-3 py-2 hover:bg-green-500 rounded-md font-semibold">
+        <AlertDialogTrigger className="border px-3 py-2.5 text-white text-sm bg-green-600 hover:bg-green-500 selection:font-medium rounded-md ">
           Add Money
         </AlertDialogTrigger>
         <AlertDialogContent>

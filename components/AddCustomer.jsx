@@ -13,17 +13,14 @@ import {
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { v4 as cid } from "uuid";
 import { addToDB } from "@/app/action";
 
 function AddCustomer() {
-  const uid = cid();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
     phone: "",
     place: "",
-    customerId: uid,
   });
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -33,9 +30,7 @@ function AddCustomer() {
       const docRef = await addToDB("customers", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
-      setForm({ name: "", phone: "", place: "", customerId: "" });
       setOpen(false);
-      // window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }

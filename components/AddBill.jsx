@@ -45,14 +45,6 @@ function AddBill({ customer }) {
       const docRef = await addToDB("bills", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
-      setForm({
-        customerId: "",
-        date: "",
-        service: "",
-        weight: "",
-        rate: "",
-        total: "",
-      });
       setOpen(false);
       // window.location.reload();
     } catch (error) {
@@ -63,7 +55,7 @@ function AddBill({ customer }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="hover:bg-blue-500">
+        <Button variant={customer.variant} className="hover:bg-blue-500">
           Add Bill
         </Button>
       </DialogTrigger>
