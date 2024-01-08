@@ -1,11 +1,14 @@
+import { Suspense } from "react";
 import Expense from "./Expense";
 import Logout from "./Logout";
 import PendingAmount from "./PendingAmount";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { UserButton } from "@clerk/nextjs";
+import Loading from "@/app/loading";
 
 function Header() {
   return (
-    <div className="sm:mx-36 sm:py-2.5 sm:px-5 px-2.5 border-b-2 border-dashed">
+    <div className="sm:mx-36 sm:py-5 py-2.5 sm:px-5 px-2.5 border-b-2 border-dashed">
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <Avatar className="h-6 w-6 sm:h-14 sm:w-14">
@@ -17,12 +20,15 @@ function Header() {
             <p className="text-sm text-muted-foreground text-start">Services</p>
           </div>
           <div>
-            <PendingAmount />
+            <Suspense fallback={<Loading />}>
+              <PendingAmount />
+            </Suspense>
           </div>
         </div>
         <div className="flex items-center space-x-4">
           <Expense />
-          <Logout />
+          {/* <Logout /> */}
+          <UserButton afterSignOutUrl="/" />
         </div>
       </div>
     </div>

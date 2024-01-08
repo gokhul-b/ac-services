@@ -1,8 +1,10 @@
 // "use client";
-import CustomerCard from "@components/CustomerCard";
-import SwitchTabs from "@components/SwitchTabs";
-import { db } from "@firebase/firebase";
+import Loading from "@/app/loading";
+import CustomerCard from "@/components/CustomerCard";
+import SwitchTabs from "@/components/SwitchTabs";
+import { db } from "@/firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { Suspense } from "react";
 
 const page = async ({ params }) => {
   const q = query(
@@ -16,8 +18,12 @@ const page = async ({ params }) => {
   });
   return (
     <div>
-      <CustomerCard customer={{ cid: params.id }} />
-      <SwitchTabs customer={{ cid: params.id }} />
+      <Suspense fallback={<Loading />}>
+        <CustomerCard customer={{ cid: params.id }} />
+      </Suspense>
+      <Suspense fallback={<Loading />}>
+        <SwitchTabs customer={{ cid: params.id }} />
+      </Suspense>
     </div>
   );
 };

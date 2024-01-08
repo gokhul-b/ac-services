@@ -1,4 +1,4 @@
-import { db } from "@firebase/firebase";
+import { db } from "@/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import React from "react";
 import { DataTable } from "./data-table";

@@ -13,8 +13,6 @@ import {
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "@firebase/firebase";
 import {
   Select,
   SelectGroup,
@@ -24,7 +22,7 @@ import {
   SelectItem,
   SelectContent,
 } from "./ui/select";
-import { addToDB } from "@app/action";
+import { addToDB } from "@/app/action";
 
 function AddBill({ customer }) {
   const [open, setOpen] = useState(false);

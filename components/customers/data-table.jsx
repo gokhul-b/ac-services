@@ -19,9 +19,9 @@ import {
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AddCustomer from "@components/AddCustomer";
-import AddBill from "@components/AddBill";
-import ViewMore from "@components/ViewMore";
+import AddCustomer from "@/components/AddCustomer";
+import AddBill from "@/components/AddBill";
+import ViewMore from "@/components/ViewMore";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);

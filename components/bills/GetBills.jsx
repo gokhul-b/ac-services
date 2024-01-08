@@ -1,4 +1,4 @@
-import { db } from "@firebase/firebase";
+import { db } from "@/firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React from "react";
 import { BillTable } from "./bill-table";
@@ -12,7 +12,9 @@ const GetBills = async ({ customer }) => {
   const querySnapshot = await getDocs(q);
   let data = [];
   querySnapshot.forEach((doc) => {
-    data.push(doc.data());
+    let temp = doc.data();
+    temp.id = doc.id;
+    data.push(temp);
   });
   return (
     <div>

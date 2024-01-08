@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@components/ui/input";
+import { Input } from "@/components/ui/input";
 
 export function BillTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);

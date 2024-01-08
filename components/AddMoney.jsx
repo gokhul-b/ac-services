@@ -1,4 +1,3 @@
-import { addDoc, collection } from "firebase/firestore";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,8 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { db } from "@firebase/firebase";
-import { addMoneyToWallet } from "@app/action";
+import { addMoneyToWallet } from "@/app/action";
 
 const AddMoney = ({ wallet }) => {
   const form = wallet.form;

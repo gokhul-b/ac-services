@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import { Button } from "../ui/button";
 export const columns = [
   {
     accessorKey: "name",
@@ -42,17 +42,4 @@ export const columns = [
       );
     },
   },
-  // {
-  //   accessorKey: "customerId",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Bill
-  //       </Button>
-  //     );
-  //   },
-  // },
 ];

@@ -13,10 +13,8 @@ import {
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "@firebase/firebase";
 import { v4 as cid } from "uuid";
-import { addToDB } from "@app/action";
+import { addToDB } from "@/app/action";
 
 function AddCustomer() {
   const uid = cid();
@@ -46,7 +44,7 @@ function AddCustomer() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">New Customer !</Button>
+        <Button>New Customer !</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

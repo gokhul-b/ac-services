@@ -1,4 +1,6 @@
-const { default: Header } = require("@components/Header");
+import Header from "@/components/Header";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 const ServiceLayout = ({ children }) => {
   return (
