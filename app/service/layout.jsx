@@ -4,10 +4,12 @@ import Loading from "../loading";
 
 const ServiceLayout = ({ children }) => {
   return (
-    <div>
-      <Header />
-      <main>{children}</main>
-    </div>
+    <Suspense fallback={<Loading />}>
+      <div>
+        <Header />
+        <main>{children}</main>
+      </div>
+    </Suspense>
   );
 };
 
