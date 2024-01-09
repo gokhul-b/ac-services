@@ -15,7 +15,6 @@ const page = async ({ params }) => {
   let data = [];
   querySnapshot.forEach((doc) => {
     data.push(doc.data());
-    // console.log(data);
   });
   return (
     <div>

@@ -84,7 +84,6 @@ export const billColumns = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => {
-                console.log(record.id);
                 deleteBill(record.id);
               }}
             >

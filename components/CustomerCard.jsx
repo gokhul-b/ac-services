@@ -1,4 +1,5 @@
 import { db } from "@/firebase/firebase";
+
 import {
   collection,
   doc,
@@ -9,6 +10,7 @@ import {
 } from "firebase/firestore";
 import CustomerWallet from "./CustomerWallet";
 import AddBill from "./AddBill";
+import UpdatePhone from "./UpdatePhone";
 
 const CustomerCard = async ({ customer }) => {
   const id = customer.cid;
@@ -46,6 +48,8 @@ const CustomerCard = async ({ customer }) => {
     }
   });
 
+  const handlePhoneChange = () => {};
+
   dueAmt = totalAmount - parseInt(totalWalletAmount);
   return (
     <div className="sm:flex sm:flex-row sm:justify-between flex-col border shadow-md sm:mx-36 sm:py-5 sm:px-5 px-2.5 py-2 sm:mt-8 mt-4 mx-2">
@@ -59,9 +63,12 @@ const CustomerCard = async ({ customer }) => {
               <p className="font-semibold">
                 Name: <span className="font-normal">{data.name}</span>
               </p>
-              <p className="font-semibold">
-                Phone: <span className="font-normal">+91 {data.phone}</span>
-              </p>
+              <div className="flex items-center">
+                <p className="font-semibold">
+                  Phone: <span className="font-normal">+91 {data.phone}</span>
+                </p>
+                <UpdatePhone customer={{ cid: id }} />
+              </div>
               <p className="font-semibold">
                 Place: <span className="font-normal">{data.place}</span>
               </p>

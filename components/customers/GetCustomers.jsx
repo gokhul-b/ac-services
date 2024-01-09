@@ -11,7 +11,6 @@ const GetCustomers = async () => {
     let temp = doc.data();
     temp.id = doc.id;
     data.push(temp);
-    // console.log(data);
   });
   return (
     <div>

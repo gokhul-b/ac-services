@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import AddCustomer from "@/components/AddCustomer";
 import AddBill from "@/components/AddBill";
 import ViewMore from "@/components/ViewMore";
+import CustomerTableRowActions from "../CustomerTableRowActions";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);
@@ -101,6 +102,11 @@ export function DataTable({ columns, data }) {
                   </TableCell>
                   <TableCell>
                     <ViewMore customer={{ cid: row.original.id }} />
+                  </TableCell>
+                  <TableCell>
+                    <CustomerTableRowActions
+                      customer={{ cid: row.original.id }}
+                    />
                   </TableCell>
                 </TableRow>
               ))

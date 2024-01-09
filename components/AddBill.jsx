@@ -51,13 +51,11 @@ function AddBill({ customer }) {
   const updateFormValidation = () => {
     const isFormFilled =
       form.date.trim() !== "" && form.service.trim() !== "" && form.total !== 0;
-    console.log(isFormFilled, form);
     setValidForm(isFormFilled);
   };
 
   const handleSubmit = async () => {
     try {
-      console.log(form);
       const docRef = await addToDB("bills", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
