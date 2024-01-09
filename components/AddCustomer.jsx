@@ -22,22 +22,51 @@ function AddCustomer() {
     phone: "",
     place: "",
   });
+  const [isValidForm, setValidForm] = useState(false);
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => {
+      const updatedForm = { ...prev, [e.target.name]: e.target.value };
+      updateFormValidation();
+      return updatedForm;
+    });
   };
+
+  const updateFormValidation = () => {
+    const isValidPhoneNumber = /^\d{10}$/.test(form.phone);
+    const isFormFilled =
+      form.name.trim() !== "" && form.place.trim() !== "" && isValidPhoneNumber;
+
+    setValidForm(isFormFilled);
+  };
+
   const handleSubmit = async () => {
     try {
       const docRef = await addToDB("customers", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
+      setForm({ name: "", phone: "", place: "" });
       setOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }
   };
 
+  const handleClose = () => {
+    // Reset the form to its initial state when closing the dialog
+    setForm({ name: "", phone: "", place: "" });
+    setValidForm(false);
+    setOpen(false);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        handleClose();
+        setOpen(newOpen);
+      }}
+    >
       <DialogTrigger asChild>
         <Button>New Customer !</Button>
       </DialogTrigger>
@@ -54,6 +83,7 @@ function AddCustomer() {
             <Input
               id="name"
               name="name"
+              value={form.name}
               placeholder="Customer name"
               onChange={handleChange}
               className="col-span-3"
@@ -66,6 +96,7 @@ function AddCustomer() {
             <Input
               id="phone"
               name="phone"
+              value={form.phone}
               placeholder="10 digit"
               onChange={handleChange}
               className="col-span-3"
@@ -78,6 +109,7 @@ function AddCustomer() {
             <Input
               id="place"
               name="place"
+              value={form.place}
               placeholder="eg: Panruti"
               onChange={handleChange}
               className="col-span-3"
@@ -85,7 +117,9 @@ function AddCustomer() {
           </div>
         </form>
         <DialogFooter>
-          <Button onClick={() => handleSubmit()}>Add</Button>
+          <Button onClick={() => handleSubmit()} disabled={!isValidForm}>
+            Add
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

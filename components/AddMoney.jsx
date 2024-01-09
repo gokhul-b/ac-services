@@ -13,12 +13,14 @@ import { addMoneyToWallet } from "@/app/action";
 
 const AddMoney = ({ wallet }) => {
   const form = wallet.form;
+  let isValidForm =
+    form.date !== "" && form.amount !== "" && form.amount !== "";
   const handleSubmit = async () => {
     try {
       const docRef = await addMoneyToWallet("wallets", form.customerId, form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
-      // window.location.reload();
+      isValidForm = false;
     } catch (error) {
       console.error("Error submitting form:", error.message);
     }
@@ -50,7 +52,7 @@ const AddMoney = ({ wallet }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSubmit}>
+            <AlertDialogAction onClick={handleSubmit} disabled={!isValidForm}>
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>
