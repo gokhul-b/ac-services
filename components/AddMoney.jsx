@@ -10,19 +10,28 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { addMoneyToWallet } from "@/app/action";
+import { useToast } from "./ui/use-toast";
 
 const AddMoney = ({ wallet }) => {
+  const { toast } = useToast();
+
   const form = wallet.form;
   let isValidForm =
-    form.date !== "" && form.amount !== "" && form.amount !== "";
+    form.date !== "" && form.amount !== "" && form.method !== "";
   const handleSubmit = async () => {
     try {
-      const docRef = await addMoneyToWallet("wallets", form.customerId, form);
+      const res = await addMoneyToWallet("wallets", form.customerId, form);
+      toast({
+        description: res,
+      });
       console.log("Form submitted successfully!");
-      console.log("Document written with ID: ", docRef);
       isValidForm = false;
     } catch (error) {
       console.error("Error submitting form:", error.message);
+      toast({
+        title: error,
+        variant: "destructive",
+      });
     }
   };
   return (

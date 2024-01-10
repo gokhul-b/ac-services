@@ -48,12 +48,10 @@ const CustomerCard = async ({ customer }) => {
     }
   });
 
-  const handlePhoneChange = () => {};
-
   dueAmt = totalAmount - parseInt(totalWalletAmount);
   return (
     <div className="sm:flex sm:flex-row sm:items-center flex-col border shadow-md sm:mx-36 sm:mt-8 mt-4 mx-2">
-      <div className="sm:text-base text-sm sm:w-[800px] w-[340px] overflow-auto whitespace-normal my-6">
+      <div className="sm:text-base text-sm sm:w-[800px] w-full overflow-auto whitespace-normal my-6">
         <div className="border-b sm:border-r sm:py-5 py-2 sm:pl-10 pl-2">
           <h1 className="text-muted-foreground sm:mb-5 mb-2">
             Personal Information

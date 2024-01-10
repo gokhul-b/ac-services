@@ -22,15 +22,15 @@ import {
   SelectItem,
   SelectContent,
 } from "./ui/select";
-import { addToDB } from "@/app/action";
+import { addToBills } from "@/app/action";
 
 function AddBill({ customer }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     customerId: customer.cid,
     date: "",
-    service: "",
-    weight: "0",
+    service: "peel",
+    weight: "",
     rate: "6",
     total: "0",
   });
@@ -44,6 +44,7 @@ function AddBill({ customer }) {
       };
       updatedForm.total = updatedForm.weight * updatedForm.rate;
       updateFormValidation(updatedForm);
+      console.log(form);
       return updatedForm;
     });
   };
@@ -56,7 +57,7 @@ function AddBill({ customer }) {
 
   const handleSubmit = async () => {
     try {
-      const docRef = await addToDB("bills", form);
+      const docRef = await addToBills("bills", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
       setOpen(false);
@@ -70,8 +71,8 @@ function AddBill({ customer }) {
     setForm({
       customerId: customer.cid,
       date: "",
-      service: "",
-      weight: "0",
+      service: "peel",
+      weight: "",
       rate: "6",
       total: "0",
     });
@@ -122,6 +123,7 @@ function AddBill({ customer }) {
               name="service"
               id="service"
               className="max-w-full"
+              defaultValue="peel"
               onValueChange={(val) => {
                 setForm({ ...form, service: val });
               }}

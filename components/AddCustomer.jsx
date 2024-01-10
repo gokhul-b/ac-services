@@ -21,6 +21,7 @@ function AddCustomer() {
     name: "",
     phone: "",
     place: "",
+    due: 0,
   });
   const [isValidForm, setValidForm] = useState(false);
 
@@ -30,6 +31,7 @@ function AddCustomer() {
       updateFormValidation();
       return updatedForm;
     });
+    console.log(form);
   };
 
   const updateFormValidation = () => {
@@ -42,10 +44,11 @@ function AddCustomer() {
 
   const handleSubmit = async () => {
     try {
+      console.log(form);
       const docRef = await addToDB("customers", form);
       console.log("Form submitted successfully!");
       console.log("Document written with ID: ", docRef);
-      setForm({ name: "", phone: "", place: "" });
+      setForm({ name: "", phone: "", place: "", due: 0 });
       setOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error.message);
@@ -54,7 +57,7 @@ function AddCustomer() {
 
   const handleClose = () => {
     // Reset the form to its initial state when closing the dialog
-    setForm({ name: "", phone: "", place: "" });
+    setForm({ name: "", phone: "", place: "", due: 0 });
     setValidForm(false);
     setOpen(false);
   };

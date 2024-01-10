@@ -23,6 +23,7 @@ import AddCustomer from "@/components/AddCustomer";
 import AddBill from "@/components/AddBill";
 import ViewMore from "@/components/ViewMore";
 import CustomerTableRowActions from "../CustomerTableRowActions";
+import DueAmount from "../DueAmount";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);
@@ -72,7 +73,6 @@ export function DataTable({ columns, data }) {
                     </TableHead>
                   );
                 })}
-                <TableHead className="text-center">Bill</TableHead>
               </TableRow>
             ))}
           </TableHeader>
@@ -84,22 +84,29 @@ export function DataTable({ columns, data }) {
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
+                    <TableCell
+                      key={cell.id}
+                      className={
+                        cell.column.id === "due" ? "text-green-500" : ""
+                      }
+                    >
+                      {cell.column.id === "due" ? (
+                        <p>
+                          ₹{" "}
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </p>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )
                       )}
                     </TableCell>
                   ))}
-                  <TableCell>
-                    <AddBill
-                      customer={{
-                        cid: row.original.id,
-                        name: row.original.name,
-                        variant: "outline",
-                      }}
-                    />
-                  </TableCell>
+
                   <TableCell>
                     <ViewMore customer={{ cid: row.original.id }} />
                   </TableCell>

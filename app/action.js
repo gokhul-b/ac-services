@@ -12,16 +12,51 @@ import {
 } from "firebase/firestore";
 import { runTransaction } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
+
 export const addToDB = async (name, form) => {
   const docRef = await addDoc(collection(db, name), form);
   revalidatePath("/service");
   return docRef.id;
 };
+
+export const addToBills = async (name, form) => {
+  const docRef = await addDoc(collection(db, name), form);
+  const sfDocRef = doc(db, "customers", form.customerId);
+  try {
+    await runTransaction(db, async (transaction) => {
+      const sfDoc = await transaction.get(sfDocRef);
+      if (!sfDoc.exists()) {
+        throw "Document does not exist!";
+      }
+      const newDue = sfDoc.data().due + parseInt(form.total);
+      transaction.update(sfDocRef, { due: newDue });
+    });
+    revalidatePath("/service");
+    return "Bill is added successfully";
+  } catch (e) {
+    console.error(e);
+    return `${e}`;
+  }
+};
+
 export const addMoneyToWallet = async (name, id, form) => {
   const docRef = await addDoc(collection(db, name), form);
-  revalidatePath("/service");
-  revalidatePath(`/service/${id}`);
-  return docRef.id;
+  const sfDocRef = doc(db, "customers", id);
+  try {
+    await runTransaction(db, async (transaction) => {
+      const sfDoc = await transaction.get(sfDocRef);
+      if (!sfDoc.exists()) {
+        throw "Document does not exist!";
+      }
+      const newDue = sfDoc.data().due - parseInt(form.amount);
+      transaction.update(sfDocRef, { due: newDue });
+    });
+    revalidatePath("/service");
+    return "Money is added successfully";
+  } catch (e) {
+    console.error(e);
+    return `${e}`;
+  }
 };
 
 export const deleteBill = async (id) => {
