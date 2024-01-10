@@ -87,7 +87,10 @@ function AddBill({ customer }) {
       }}
     >
       <DialogTrigger asChild>
-        <Button variant={customer.variant} className="hover:bg-blue-500">
+        <Button
+          variant={customer.variant}
+          className="hover:bg-blue-500 w-full rounded-full"
+        >
           Add Bill
         </Button>
       </DialogTrigger>

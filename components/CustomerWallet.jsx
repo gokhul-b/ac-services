@@ -38,7 +38,7 @@ const CustomerWallet = ({ customer }) => {
     setForm({ customerId: customer.cid, date: "", amount: "", method: "" });
   };
   return (
-    <div className="sm:pr-4 sm:pl-8 sm:border-l-2 mt-2 border-dashed">
+    <div>
       <Card>
         <div className="flex items-center justify-between">
           <CardHeader className="flex ">

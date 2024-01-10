@@ -52,9 +52,9 @@ const UpdatePhone = ({ customer }) => {
         }}
       >
         <DialogTrigger asChild>
-          <button className="ml-2 px-[2px] py-[2px] hover:bg-gray-200 rounded-sm">
+          <div className="hover:bg-gray-200 rounded-sm pb-1">
             <EditIcon />
-          </button>
+          </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[360px]">
           <DialogHeader>

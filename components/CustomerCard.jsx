@@ -52,64 +52,78 @@ const CustomerCard = async ({ customer }) => {
 
   dueAmt = totalAmount - parseInt(totalWalletAmount);
   return (
-    <div className="sm:flex sm:flex-row sm:justify-between flex-col border shadow-md sm:mx-36 sm:py-5 sm:px-5 px-2.5 py-2 sm:mt-8 mt-4 mx-2">
-      <div>
-        <div className="sm:px-4 sm:py-4 px-2 py-2">
-          <h1 className="font-bold sm:text-2xl text-lg sm:pb-8 pb-2 text-blue-700">
-            Customer overview:
+    <div className="sm:flex sm:flex-row sm:items-center flex-col border shadow-md sm:mx-36 sm:mt-8 mt-4 mx-2">
+      <div className="sm:text-base text-sm sm:w-[800px] w-[340px] overflow-auto whitespace-normal my-6">
+        <div className="border-b sm:border-r sm:py-5 py-2 sm:pl-10 pl-2">
+          <h1 className="text-muted-foreground sm:mb-5 mb-2">
+            Personal Information
           </h1>
-          <div className="flex sm:flex-row sm:space-x-24 flex-col">
-            <div className="sm:space-y-8 mb-2">
-              <p className="font-semibold">
-                Name: <span className="font-normal">{data.name}</span>
-              </p>
+          <div className="grid grid-cols-3 gap-8">
+            <div>
+              <p className="mb-1">Name</p>
+              <p className="text-muted-foreground">{data.name}</p>
+            </div>
+            <div>
               <div className="flex items-center">
-                <p className="font-semibold">
-                  Phone: <span className="font-normal">+91 {data.phone}</span>
-                </p>
+                <p className="mb-1 mr-2">Phone</p>
                 <UpdatePhone customer={{ cid: id }} />
               </div>
-              <p className="font-semibold">
-                Place: <span className="font-normal">{data.place}</span>
-              </p>
+              <p className="text-muted-foreground">{data.phone}</p>
             </div>
-            <div className="sm:space-y-8 mb-2">
-              <p className="font-semibold text-red-500">
-                Due amt: <span className="font-normal">₹ {dueAmt}</span>
-              </p>
-              <p className="font-semibold text-green-500">
-                Paid amt:{" "}
-                <span className="font-normal">₹ {totalWalletAmount}</span>
-              </p>
-              <p className="font-semibold">
-                Total amt: <span className="font-normal">₹ {totalAmount}</span>
-              </p>
-            </div>
-            <div className="sm:space-y-8">
-              <p className="font-semibold">
-                Peel qty: <span className="font-normal">{peelWt} kg</span>
-              </p>
-              <p className="font-semibold">
-                Borma qty: <span className="font-normal">{bormaWt} kg</span>
-              </p>
-              <p className="font-semibold">
-                Both qty: <span className="font-normal">{bothWt} kg</span>
-              </p>
+            <div>
+              <p className="mb-1">Place</p>
+              <p className="text-muted-foreground">{data.place}</p>
             </div>
           </div>
-          <div className="sm:my-8 my-2 flex justify-center">
-            <AddBill
-              customer={{
-                cid: id,
-                name: data.name,
-                variant: "default",
-              }}
-            />
+        </div>
+        <div className="border-b sm:border-r sm:py-5 py-2 sm:pl-10 pl-2">
+          <h1 className="text-muted-foreground sm:mb-5 mb-2">
+            Transaction Information
+          </h1>
+          <div className="grid grid-cols-3 gap-8">
+            <div>
+              <p className="mb-1">Due Amount</p>
+              <p className=" text-red-400">₹ {dueAmt}</p>
+            </div>
+            <div>
+              <p className="mb-1">Paid Amount</p>
+              <div className="flex items-center">
+                <p className="text-green-400">₹ {totalWalletAmount}</p>
+              </div>
+            </div>
+            <div>
+              <p className="mb-1">Total Amount</p>
+              <p className="text-muted-foreground">₹ {totalAmount}</p>
+            </div>
+          </div>
+        </div>
+        <div className="sm:py-5 py-2 sm:pl-10 pl-2 sm:border-r">
+          <h1 className="text-muted-foreground sm:mb-5 mb-2">Quantities</h1>
+          <div className="grid grid-cols-3 gap-8">
+            <div>
+              <p className="mb-1">Peel</p>
+              <p className="text-muted-foreground">{peelWt} kg</p>
+            </div>
+            <div>
+              <p className="mb-1">Borma</p>
+              <p className="text-muted-foreground mr-2">{bormaWt} kg</p>
+            </div>
+            <div>
+              <p className="mb-1">Peel & Borma</p>
+              <p className="text-muted-foreground">{bothWt} kg</p>
+            </div>
           </div>
         </div>
       </div>
-      <div>
+      <div className="mx-auto flex flex-col space-y-8 px-2 sm:py-2 py-5">
         <CustomerWallet customer={{ cid: id }} />
+        <AddBill
+          customer={{
+            cid: id,
+            name: data.name,
+            variant: "default",
+          }}
+        />
       </div>
     </div>
   );
