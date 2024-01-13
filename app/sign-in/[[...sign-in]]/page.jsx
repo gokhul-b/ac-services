@@ -36,7 +36,7 @@ export default function Page() {
 
       if (result?.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        router.push("/service");
+        // router.push("/service");
         // router.push(searchParams.redirect_url);
       } else {
         console.log(result);
