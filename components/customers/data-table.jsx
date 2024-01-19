@@ -83,13 +83,13 @@ export function DataTable({ columns, data }) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => {
-                    router.push(`/service/${row.original.id}`);
-                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
+                      onClick={(e) => {
+                        router.push(`/service/${row.original.id}`);
+                      }}
                       className={
                         cell.column.id === "due" ? "text-green-500" : ""
                       }
@@ -111,9 +111,9 @@ export function DataTable({ columns, data }) {
                     </TableCell>
                   ))}
 
-                  <TableCell>
-                    {/* <ViewMore customer={{ cid: row.original.id }} /> */}
-                  </TableCell>
+                  {/* <TableCell>
+                    <ViewMore customer={{ cid: row.original.id }} />
+                  </TableCell> */}
                   <TableCell>
                     <CustomerTableRowActions
                       customer={{ cid: row.original.id }}
