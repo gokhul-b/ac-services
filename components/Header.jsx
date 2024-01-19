@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Expense from "./Expense";
+import Expense from "./ExpenseIcon";
 import Logout from "./Logout";
 import PendingAmount from "./PendingAmount";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";

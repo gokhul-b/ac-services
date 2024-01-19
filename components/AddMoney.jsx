@@ -12,7 +12,7 @@ import {
 import { addMoneyToWallet } from "@/app/action";
 import { useToast } from "./ui/use-toast";
 
-const AddMoney = ({ wallet }) => {
+const AddMoney = ({ wallet, onAddMoneySuccess }) => {
   const { toast } = useToast();
 
   const form = wallet.form;
@@ -26,6 +26,9 @@ const AddMoney = ({ wallet }) => {
       });
       console.log("Form submitted successfully!");
       isValidForm = false;
+      if (onAddMoneySuccess) {
+        onAddMoneySuccess();
+      }
     } catch (error) {
       console.error("Error submitting form:", error.message);
       toast({

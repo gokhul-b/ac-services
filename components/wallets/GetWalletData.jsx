@@ -12,7 +12,9 @@ const GetWalletData = async ({ customer }) => {
   const querySnapshot = await getDocs(q);
   let data = [];
   querySnapshot.forEach((doc) => {
-    data.push(doc.data());
+    let temp = doc.data();
+    temp.id = doc.id;
+    data.push(temp);
   });
   return (
     <div>

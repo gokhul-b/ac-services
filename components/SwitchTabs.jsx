@@ -5,7 +5,7 @@ import GetWalletData from "./wallets/GetWalletData";
 const SwitchTabs = ({ customer }) => {
   return (
     <div className="mt-8">
-      <Tabs defaultValue="bill" className="sm:mx-64 mx-2">
+      <Tabs defaultValue="bill">
         <TabsList>
           <TabsTrigger value="bill">Bill History</TabsTrigger>
           <TabsTrigger value="wallet">Wallet History</TabsTrigger>

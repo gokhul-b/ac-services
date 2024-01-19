@@ -24,6 +24,7 @@ import AddBill from "@/components/AddBill";
 import ViewMore from "@/components/ViewMore";
 import CustomerTableRowActions from "../CustomerTableRowActions";
 import DueAmount from "../DueAmount";
+import { useRouter } from "next/navigation";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);
@@ -42,7 +43,7 @@ export function DataTable({ columns, data }) {
       columnFilters,
     },
   });
-
+  const router = useRouter();
   return (
     <div>
       <div className="flex items-center py-4 space-x-4">
@@ -82,6 +83,9 @@ export function DataTable({ columns, data }) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => {
+                    router.push(`/service/${row.original.id}`);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -108,7 +112,7 @@ export function DataTable({ columns, data }) {
                   ))}
 
                   <TableCell>
-                    <ViewMore customer={{ cid: row.original.id }} />
+                    {/* <ViewMore customer={{ cid: row.original.id }} /> */}
                   </TableCell>
                   <TableCell>
                     <CustomerTableRowActions

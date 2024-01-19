@@ -107,7 +107,7 @@ const CustomerWallet = ({ customer }) => {
           <Button className="bg-red-500 hover:bg-red-400" onClick={handleClear}>
             Clear
           </Button>
-          <AddMoney wallet={{ form }} />
+          <AddMoney wallet={{ form }} onAddMoneySuccess={handleClear} />
         </CardFooter>
       </Card>
     </div>

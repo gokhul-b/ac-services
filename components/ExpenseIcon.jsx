@@ -1,8 +1,19 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 function Expense() {
+  const router = useRouter();
+  // const handleClick = () => {
+  //   router.push("/expense");
+  // };
   return (
-    <div className="px-2 py-2 hover:bg-gray-200 border-b-2 border-green-500">
+    <div
+      className="px-2 py-2 hover:bg-gray-200 border-b-2 border-green-500"
+      onClick={() => {
+        router.push("/expense");
+      }}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24"

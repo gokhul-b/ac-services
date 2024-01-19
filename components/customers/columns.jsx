@@ -17,6 +17,21 @@ export const columns = [
     },
   },
   {
+    accessorKey: "due",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Due Amount
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+
+  {
     accessorKey: "phone",
     header: ({ column }) => {
       return (
@@ -38,20 +53,6 @@ export const columns = [
           // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Place
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "due",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Due Amount
-          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },

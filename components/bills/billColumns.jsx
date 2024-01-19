@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { deleteBill } from "@/app/action";
+import { deleteBill, deleteRecord } from "@/app/action";
 export const billColumns = [
   {
     accessorKey: "date",
@@ -84,7 +84,8 @@ export const billColumns = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => {
-                deleteBill(record.id);
+                // console.log(record);
+                deleteRecord(record.id, record.customerId, "bills", "total");
               }}
             >
               Delete Bill

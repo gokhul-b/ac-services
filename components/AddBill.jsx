@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -23,18 +23,21 @@ import {
   SelectContent,
 } from "./ui/select";
 import { addToBills } from "@/app/action";
+import Loading from "@/app/loading";
+import { useToast } from "./ui/use-toast";
 
 function AddBill({ customer }) {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+
   const [form, setForm] = useState({
     customerId: customer.cid,
     date: "",
     service: "peel",
     weight: "",
     rate: "6",
-    total: "0",
+    total: 0,
   });
-  const [isValidForm, setValidForm] = useState(false);
 
   const handleChange = (e) => {
     setForm((prevForm) => {
@@ -42,27 +45,29 @@ function AddBill({ customer }) {
         ...prevForm,
         [e.target.name]: e.target.value,
       };
-      updatedForm.total = updatedForm.weight * updatedForm.rate;
-      updateFormValidation(updatedForm);
+      updatedForm.total = parseInt(updatedForm.weight * updatedForm.rate);
       console.log(form);
       return updatedForm;
     });
   };
 
-  const updateFormValidation = () => {
-    const isFormFilled =
-      form.date.trim() !== "" && form.service.trim() !== "" && form.total !== 0;
-    setValidForm(isFormFilled);
-  };
+  let isValidForm =
+    form.date.trim() !== "" && form.service.trim() !== "" && form.total !== 0;
 
   const handleSubmit = async () => {
     try {
-      const docRef = await addToBills("bills", form);
+      const res = await addToBills("bills", form);
+      toast({
+        description: res,
+      });
       console.log("Form submitted successfully!");
-      console.log("Document written with ID: ", docRef);
       setOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error.message);
+      toast({
+        title: error,
+        variant: "destructive",
+      });
     }
   };
 
@@ -74,9 +79,8 @@ function AddBill({ customer }) {
       service: "peel",
       weight: "",
       rate: "6",
-      total: "0",
+      total: 0,
     });
-    setValidForm(false);
     setOpen(false);
   };
   return (
@@ -177,9 +181,11 @@ function AddBill({ customer }) {
           <p className="text-sm text-muted-foreground">
             Customer name: {customer.name}
           </p>
-          <Button onClick={() => handleSubmit()} disabled={!isValidForm}>
-            Add
-          </Button>
+          <Suspense fallback={<Loading />}>
+            <Button onClick={() => handleSubmit()} disabled={!isValidForm}>
+              Add
+            </Button>
+          </Suspense>
         </DialogFooter>
       </DialogContent>
     </Dialog>

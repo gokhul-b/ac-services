@@ -50,7 +50,7 @@ const CustomerCard = async ({ customer }) => {
 
   dueAmt = totalAmount - parseInt(totalWalletAmount);
   return (
-    <div className="sm:flex sm:flex-row sm:items-center flex-col border shadow-md sm:mx-36 sm:mt-8 mt-4 mx-2">
+    <div className="sm:flex sm:flex-row sm:items-center flex-col border shadow-md sm:mt-8 mt-4">
       <div className="sm:text-base text-sm sm:w-[800px] w-full overflow-auto whitespace-normal my-6">
         <div className="border-b sm:border-r sm:py-5 py-2 sm:pl-10 pl-2">
           <h1 className="text-muted-foreground sm:mb-5 mb-2">
@@ -113,7 +113,7 @@ const CustomerCard = async ({ customer }) => {
           </div>
         </div>
       </div>
-      <div className="mx-auto flex flex-col space-y-8 px-2 sm:py-2 py-5">
+      <div className="mx-auto flex flex-col space-y-8 sm:px-10 px-2 sm:py-2 py-5">
         <CustomerWallet customer={{ cid: id }} />
         <AddBill
           customer={{

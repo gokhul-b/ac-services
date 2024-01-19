@@ -32,7 +32,7 @@ export const addToBills = async (name, form) => {
       transaction.update(sfDocRef, { due: newDue });
     });
     revalidatePath("/service");
-    return "Bill is added successfully";
+    return "Bill added successfully";
   } catch (e) {
     console.error(e);
     return `${e}`;
@@ -52,6 +52,7 @@ export const addMoneyToWallet = async (name, id, form) => {
       transaction.update(sfDocRef, { due: newDue });
     });
     revalidatePath("/service");
+    revalidatePath(`/service/${id}`);
     return "Money is added successfully";
   } catch (e) {
     console.error(e);
@@ -59,10 +60,29 @@ export const addMoneyToWallet = async (name, id, form) => {
   }
 };
 
-export const deleteBill = async (id) => {
-  await deleteDoc(doc(db, "bills", id));
-  revalidatePath("/service");
-  revalidatePath(`/service/${id}`);
+export const deleteRecord = async (id, cid, name, obj) => {
+  console.log(id, cid);
+  const sfDocRef = doc(db, name, id);
+  const sfDocRefForCustomer = doc(db, "customers", cid);
+  try {
+    await runTransaction(db, async (transaction) => {
+      const sfDoc = await transaction.get(sfDocRef);
+      const sfDocCustomer = await transaction.get(sfDocRefForCustomer);
+      if (!sfDoc.exists() || !sfDocCustomer.exists()) {
+        throw "Document does not exist!";
+      }
+      console.log(sfDocCustomer.data());
+      const newDue = sfDocCustomer.data().due - parseInt(sfDoc.data()[obj]);
+      transaction.update(sfDocRefForCustomer, { due: newDue });
+    });
+    await deleteDoc(doc(db, name, id));
+    revalidatePath("/service");
+    revalidatePath(`/service/${id}`);
+    return "Record Deleted";
+  } catch (e) {
+    console.error(e);
+    return `${e}`;
+  }
 };
 
 export const updatePhoneNumber = async (docId, newPhone) => {
@@ -104,6 +124,15 @@ export const deleteCustomer = async (id) => {
     });
     revalidatePath("/service");
     return "Customer is removed successfully";
+  } catch (e) {
+    return `${e}`;
+  }
+};
+
+export const addExpense = async (form) => {
+  try {
+    await addDoc(collection(db, "expenses"), form);
+    return "Expense added successfully";
   } catch (e) {
     return `${e}`;
   }
