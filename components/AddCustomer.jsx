@@ -17,33 +17,29 @@ import { addToDB } from "@/app/action";
 
 function AddCustomer() {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
     phone: "",
     place: "",
     due: 0,
   });
-  const [isValidForm, setValidForm] = useState(false);
 
   const handleChange = (e) => {
     setForm((prev) => {
       const updatedForm = { ...prev, [e.target.name]: e.target.value };
-      updateFormValidation();
       return updatedForm;
     });
-    console.log(form);
   };
 
-  const updateFormValidation = () => {
-    const isValidPhoneNumber = /^\d{10}$/.test(form.phone);
-    const isFormFilled =
-      form.name.trim() !== "" && form.place.trim() !== "" && isValidPhoneNumber;
+  let isValidPhoneNumber = /^\d{10}$/.test(form.phone);
 
-    setValidForm(isFormFilled);
-  };
+  let isValidForm =
+    form.name.trim() !== "" && form.place.trim() !== "" && isValidPhoneNumber;
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       console.log(form);
       const docRef = await addToDB("customers", form);
       console.log("Form submitted successfully!");
@@ -52,13 +48,14 @@ function AddCustomer() {
       setOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleClose = () => {
     // Reset the form to its initial state when closing the dialog
     setForm({ name: "", phone: "", place: "", due: 0 });
-    setValidForm(false);
     setOpen(false);
   };
 
@@ -120,8 +117,11 @@ function AddCustomer() {
           </div>
         </form>
         <DialogFooter>
-          <Button onClick={() => handleSubmit()} disabled={!isValidForm}>
-            Add
+          <Button
+            onClick={() => handleSubmit()}
+            disabled={!isValidForm || isLoading}
+          >
+            {isLoading ? "Adding..." : "Add"}
           </Button>
         </DialogFooter>
       </DialogContent>

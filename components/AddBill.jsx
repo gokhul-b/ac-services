@@ -28,6 +28,8 @@ import { useToast } from "./ui/use-toast";
 
 function AddBill({ customer }) {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { toast } = useToast();
 
   const [form, setForm] = useState({
@@ -56,6 +58,7 @@ function AddBill({ customer }) {
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       const res = await addToBills("bills", form);
       toast({
         description: res,
@@ -68,6 +71,8 @@ function AddBill({ customer }) {
         title: error,
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false); // Reset loading state when the process is complete (success or error)
     }
   };
 
@@ -182,8 +187,11 @@ function AddBill({ customer }) {
             Customer name: {customer.name}
           </p>
           <Suspense fallback={<Loading />}>
-            <Button onClick={() => handleSubmit()} disabled={!isValidForm}>
-              Add
+            <Button
+              onClick={() => handleSubmit()}
+              disabled={!isValidForm || isLoading}
+            >
+              {isLoading ? "Adding..." : "Add"}
             </Button>
           </Suspense>
         </DialogFooter>

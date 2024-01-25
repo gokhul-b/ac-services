@@ -14,7 +14,7 @@ const SwitchTabsForExpense = () => {
         <TabsContent value="add">
           <AddExpense />
         </TabsContent>
-        <TabsContent value="view">
+        <TabsContent value="expenses">
           <GetExpenses />
         </TabsContent>
       </Tabs>

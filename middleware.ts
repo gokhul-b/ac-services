@@ -13,6 +13,7 @@ export default authMiddleware({
     }
     // redirect them to organization selection page
     if (auth.userId && req.nextUrl.pathname === "/sign-in") {
+      console.log(auth);
       return NextResponse.redirect(
         req.nextUrl.searchParams.get("redirect_url") ||
           req.nextUrl.origin + "/service"

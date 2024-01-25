@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 
 export default function Page() {
   const { isLoaded, signIn, setActive } = useSignIn();
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -24,11 +25,12 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isLoaded) {
+    if (isLoading || !isLoaded) {
       return;
     }
 
     try {
+      setIsLoading(true);
       const result = await signIn?.create({
         identifier: username,
         password,
@@ -48,6 +50,8 @@ export default function Page() {
         title: err.errors[0].longMessage,
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false); // Reset loading state when the process is complete (success or error)
     }
   };
   return (
@@ -93,8 +97,9 @@ export default function Page() {
                     await handleSubmit(e);
                     router.refresh();
                   }}
+                  disabled={isLoading}
                 >
-                  Sign in
+                  {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
               </div>
             </form>

@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,8 +12,10 @@ import {
 } from "./ui/alert-dialog";
 import { addMoneyToWallet } from "@/app/action";
 import { useToast } from "./ui/use-toast";
+import { useState } from "react";
 
 const AddMoney = ({ wallet, onAddMoneySuccess }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const form = wallet.form;
@@ -20,6 +23,7 @@ const AddMoney = ({ wallet, onAddMoneySuccess }) => {
     form.date !== "" && form.amount !== "" && form.method !== "";
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       const res = await addMoneyToWallet("wallets", form.customerId, form);
       toast({
         description: res,
@@ -35,6 +39,8 @@ const AddMoney = ({ wallet, onAddMoneySuccess }) => {
         title: error,
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false); // Reset loading state when the process is complete (success or error)
     }
   };
   return (
@@ -64,8 +70,11 @@ const AddMoney = ({ wallet, onAddMoneySuccess }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleSubmit} disabled={!isValidForm}>
-              Continue
+            <AlertDialogAction
+              onClick={handleSubmit}
+              disabled={!isValidForm || isLoading}
+            >
+              {isLoading ? "Crediting..." : "Continue"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

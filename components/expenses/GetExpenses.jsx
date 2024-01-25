@@ -1,7 +1,12 @@
 import React from "react";
+import ExpenseCard from "./ExpenseCard";
 
 const GetExpenses = () => {
-  return <div>GetExpenses</div>;
+  return (
+    <div>
+      <ExpenseCard />
+    </div>
+  );
 };
 
 export default GetExpenses;
