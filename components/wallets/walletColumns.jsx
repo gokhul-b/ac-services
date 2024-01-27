@@ -1,5 +1,5 @@
 "use client";
-import { deleteBill, deleteRecord } from "@/app/action";
+import { deletePayment } from "@/app/action";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { MoreHorizontal } from "lucide-react";
@@ -73,7 +73,12 @@ export const walletColumns = [
             <DropdownMenuItem
               onClick={() => {
                 // console.log(row);
-                deleteRecord(record.id, record.customerId, "wallets", "amount");
+                deletePayment(
+                  record.id,
+                  record.customerId,
+                  "wallets",
+                  "amount"
+                );
               }}
             >
               Delete Payment

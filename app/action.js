@@ -85,6 +85,31 @@ export const deleteRecord = async (id, cid, name, obj) => {
   }
 };
 
+export const deletePayment = async (id, cid, name, obj) => {
+  console.log(id, cid);
+  const sfDocRef = doc(db, name, id);
+  const sfDocRefForCustomer = doc(db, "customers", cid);
+  try {
+    await runTransaction(db, async (transaction) => {
+      const sfDoc = await transaction.get(sfDocRef);
+      const sfDocCustomer = await transaction.get(sfDocRefForCustomer);
+      if (!sfDoc.exists() || !sfDocCustomer.exists()) {
+        throw "Document does not exist!";
+      }
+      console.log(sfDocCustomer.data());
+      const newDue = sfDocCustomer.data().due + parseInt(sfDoc.data()[obj]);
+      transaction.update(sfDocRefForCustomer, { due: newDue });
+    });
+    await deleteDoc(doc(db, name, id));
+    revalidatePath("/service");
+    revalidatePath(`/service/${id}`);
+    return "Record Deleted";
+  } catch (e) {
+    console.error(e);
+    return `${e}`;
+  }
+};
+
 export const updatePhoneNumber = async (docId, newPhone) => {
   const sfDocRef = doc(db, "customers", docId);
   try {
