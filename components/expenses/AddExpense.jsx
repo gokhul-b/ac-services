@@ -23,11 +23,13 @@ import { Button } from "../ui/button";
 import { addExpense } from "@/app/action";
 
 const AddExpense = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
-    amount: 0,
+    amount: "",
     category: "",
     date: "",
     note: "",
+    labourname: "",
   });
 
   const standardCategories = ["Labour", "E-Bill", "Maintenance", "Other"];
@@ -45,13 +47,28 @@ const AddExpense = () => {
       };
       return updatedForm;
     });
+    console.log(form);
   };
 
   let isValidForm = form.amount > 0 && form.category !== "" && form.date !== "";
 
   const handleSubmit = async (e) => {
     e.preventDefault;
-    const response = await addExpense(form);
+    try {
+      setIsLoading(true);
+      const response = await addExpense(form);
+      setForm({
+        amount: "",
+        category: "",
+        date: "",
+        note: "",
+        labourname: "",
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -96,6 +113,7 @@ const AddExpense = () => {
               <Select
                 name="category"
                 id="category"
+                value={form.category}
                 onValueChange={handleCategoryChange}
               >
                 <SelectTrigger>
@@ -116,9 +134,10 @@ const AddExpense = () => {
                 </SelectContent>
               </Select>
             </div>
-            {selectedCategory === "Other" && (
+            {(selectedCategory === "Other" ||
+              selectedCategory === "Maintenance") && (
               <div className="">
-                <Label htmlFor="date">Note</Label>
+                <Label htmlFor="note">Note</Label>
                 <Input
                   type="text"
                   id="note"
@@ -130,15 +149,29 @@ const AddExpense = () => {
                 />
               </div>
             )}
+            {selectedCategory === "Labour" && (
+              <div className="">
+                <Label htmlFor="labourname">Labour Name</Label>
+                <Input
+                  type="text"
+                  id="labourname"
+                  name="labourname"
+                  placeholder="eg; Arivumani"
+                  value={form.labourname}
+                  onChange={handleChange}
+                  className="col-span-3 placeholder-gray-500"
+                />
+              </div>
+            )}
           </form>
         </CardContent>
         <CardFooter>
           <Button
             className="w-full mt-1"
-            disabled={!isValidForm}
+            disabled={!isValidForm || isLoading}
             onClick={handleSubmit}
           >
-            Add
+            {isLoading ? "Adding..." : "Add"}
           </Button>
         </CardFooter>
       </Card>

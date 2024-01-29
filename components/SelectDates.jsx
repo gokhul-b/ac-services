@@ -11,6 +11,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 const SelectDates = () => {
   const [startDate, setStartDate] = useState("");
@@ -45,15 +46,17 @@ const SelectDates = () => {
           </DialogHeader>
           <form className="">
             <div className="flex items-center">
-              <Input
-                type="date"
-                id="start date"
-                placeholder="start"
-                className="w-auto"
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                }}
-              />
+              <div>
+                <Input
+                  type="date"
+                  id="start date"
+                  placeholder="start"
+                  className="w-auto"
+                  onChange={(e) => {
+                    setStartDate(e.target.value);
+                  }}
+                />
+              </div>
               <p className="mx-2">-</p>
               <Input
                 type="date"

@@ -6,6 +6,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   query,
   where,
@@ -160,5 +161,64 @@ export const addExpense = async (form) => {
     return "Expense added successfully";
   } catch (e) {
     return `${e}`;
+  }
+};
+
+export const getExpensesByDuration = async (durationInMonths) => {
+  const formatFirestoreDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const currentDate = new Date();
+  const startDate = new Date(currentDate);
+  startDate.setMonth(currentDate.getMonth() - durationInMonths);
+  const queryForIncome = query(
+    collection(db, "wallets"),
+    where("date", ">=", formatFirestoreDate(startDate)),
+    where("date", "<=", formatFirestoreDate(currentDate))
+  );
+  const queryForExpense = query(
+    collection(db, "expenses"),
+    where("date", ">=", formatFirestoreDate(startDate)),
+    where("date", "<=", formatFirestoreDate(currentDate))
+  );
+
+  try {
+    const querySnapshotForExpense = await getDocs(queryForExpense);
+    const querySnapshotForIncome = await getDocs(queryForIncome);
+
+    const expenses = querySnapshotForExpense.docs.map((doc) => doc.data());
+    const incomes = await Promise.all(
+      querySnapshotForIncome.docs.map(async (doc) => {
+        const incomeData = doc.data();
+        if (incomeData.customerId) {
+          // Fetch and attach payer name
+          const payerName = await getCustomerName(incomeData.customerId);
+          return { ...incomeData, payerName };
+        }
+        return incomeData;
+      })
+    );
+    return { expenses, incomes };
+  } catch (error) {
+    console.error("Error fetching expenses:", error);
+    throw error;
+  }
+};
+
+export const getCustomerName = async (docId) => {
+  const docRef = doc(db, "customers", docId);
+  try {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data().name;
+    } else {
+      return "No such document!";
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
