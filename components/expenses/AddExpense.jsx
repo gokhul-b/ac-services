@@ -72,7 +72,7 @@ const AddExpense = () => {
   };
 
   return (
-    <div className="sm:w-full sm:flex sm:justify-center font-[sans-serif]">
+    <div className="sm:w-full sm:flex sm:justify-center font-[sans-serif] my-8">
       <Card className="shadow-xl sm:min-w-[600px] m-2 sm:px-3 sm:py-3 px-1 py-1">
         <CardHeader>
           <CardTitle className="font-semibold font-[sans-serif]">

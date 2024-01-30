@@ -35,7 +35,12 @@ const SelectDates = () => {
         }}
       >
         <DialogTrigger asChild>
-          <Button variant="outline">Select dates</Button>
+          <Button
+            variant="outline"
+            className="sm:text-sm text-xs sm:px-4 sm:py-2 px-2 py-1"
+          >
+            Select dates
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[360px]">
           <DialogHeader>

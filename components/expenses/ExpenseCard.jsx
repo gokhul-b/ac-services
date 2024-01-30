@@ -56,7 +56,7 @@ const ExpenseCard = () => {
               activeButton === "btn12months"
                 ? "bg-blue-500 text-white"
                 : "border"
-            } rounded-tr-none rounded-br-none`}
+            } rounded-tr-none rounded-br-none sm:text-sm text-xs sm:px-4 sm:py-2 px-2 py-1`}
           >
             12 months
           </Button>
@@ -67,7 +67,7 @@ const ExpenseCard = () => {
               activeButton === "btn6months"
                 ? "bg-blue-500 text-white"
                 : "border"
-            } rounded-none`}
+            } rounded-none sm:text-sm text-xs sm:px-4 sm:py-2 px-2 py-1`}
           >
             6 months
           </Button>
@@ -78,7 +78,7 @@ const ExpenseCard = () => {
               activeButton === "btn3months"
                 ? "bg-blue-500 text-white"
                 : "border"
-            } rounded-none`}
+            } rounded-none sm:text-sm text-xs sm:px-4 sm:py-2 px-2 py-1`}
           >
             3 months
           </Button>
@@ -87,9 +87,9 @@ const ExpenseCard = () => {
             onClick={() => handleButtonClick("btn1month")}
             className={`${
               activeButton === "btn1month" ? "bg-blue-500 text-white" : "border"
-            } rounded-tl-none rounded-bl-none`}
+            } rounded-tl-none rounded-bl-none sm:text-sm text-xs sm:px-4 sm:py-2 px-2 py-1`}
           >
-            Last 30 days
+            30 days
           </Button>
         </div>
         <div>
