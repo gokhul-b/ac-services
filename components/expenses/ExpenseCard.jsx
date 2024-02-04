@@ -3,35 +3,41 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import SelectDates from "../SelectDates";
 import ExpenseDashboard from "./ExpenseDashboard";
-import ExpenseList from "./Transactions";
-import { getExpensesByDuration } from "@/app/action";
+import { getExpensesByDates, getExpensesByDuration } from "@/app/action";
 import Transactions from "./Transactions";
 
-const ExpenseCard = () => {
+const ExpenseCard = ({ initialData }) => {
   const [activeButton, setActiveButton] = useState("btn1month");
-  const [expenses, setExpenses] = useState([]);
-  const [incomes, setIncomes] = useState([]);
-  const [duration, setDuration] = useState(0);
+  const [expenses, setExpenses] = useState(initialData["expenses"]);
+  const [incomes, setIncomes] = useState(initialData["incomes"]);
+  const [duration, setDuration] = useState(1);
 
   const handleButtonClick = async (buttonId) => {
     setActiveButton(buttonId);
     try {
       const duration = getDurationFromButtonId(buttonId);
       const res = await getExpensesByDuration(duration);
-      // console.log(res);
       setExpenses(res["expenses"]);
       setIncomes(res["incomes"]);
-      // console.log(res);
       setDuration(duration);
-      // // Iterate through the expenses array
-      //
     } catch (e) {
       console.error(e);
     }
-    // Add any additional logic or actions you want to perform when a button is clicked
   };
+
+  const handleDateSelection = async (startDate, endDate, duration) => {
+    try {
+      const res = await getExpensesByDates(startDate, endDate);
+      console.log(duration);
+      setExpenses(res["expenses"]);
+      setIncomes(res["incomes"]);
+      setDuration(duration);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const getDurationFromButtonId = (buttonId) => {
-    // Map button IDs to corresponding time durations
     const durationMap = {
       btn1month: 1,
       btn3months: 3,
@@ -40,11 +46,7 @@ const ExpenseCard = () => {
     };
     return durationMap[buttonId];
   };
-  useEffect(() => {
-    // Fetch data for the default duration (last 30 days) when the component mounts
-    const defaultButtonId = "btn1month";
-    handleButtonClick(defaultButtonId);
-  }, []);
+
   return (
     <div>
       <div className="flex justify-between my-8">
@@ -93,7 +95,7 @@ const ExpenseCard = () => {
           </Button>
         </div>
         <div>
-          <SelectDates />
+          <SelectDates onDateSelect={handleDateSelection} />
         </div>
       </div>
       <div>

@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { runTransaction } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
+import { cache } from "react";
 
 export const addToDB = async (name, form) => {
   const docRef = await addDoc(collection(db, name), form);
@@ -175,6 +176,7 @@ export const getExpensesByDuration = async (durationInMonths) => {
   const currentDate = new Date();
   const startDate = new Date(currentDate);
   startDate.setMonth(currentDate.getMonth() - durationInMonths);
+
   const queryForIncome = query(
     collection(db, "wallets"),
     where("date", ">=", formatFirestoreDate(startDate)),
@@ -185,7 +187,14 @@ export const getExpensesByDuration = async (durationInMonths) => {
     where("date", ">=", formatFirestoreDate(startDate)),
     where("date", "<=", formatFirestoreDate(currentDate))
   );
+  const response = await getIncomesAndExpenses(queryForExpense, queryForIncome);
+  return response;
+};
 
+export const getIncomesAndExpenses = async (
+  queryForExpense,
+  queryForIncome
+) => {
   try {
     const querySnapshotForExpense = await getDocs(queryForExpense);
     const querySnapshotForIncome = await getDocs(queryForIncome);
@@ -194,10 +203,11 @@ export const getExpensesByDuration = async (durationInMonths) => {
     const incomes = await Promise.all(
       querySnapshotForIncome.docs.map(async (doc) => {
         const incomeData = doc.data();
+
         if (incomeData.customerId) {
           // Fetch and attach payer name
           const payerName = await getCustomerName(incomeData.customerId);
-          return { ...incomeData, payerName };
+          return { ...incomeData, payerName, category: "Payment" };
         }
         return incomeData;
       })
@@ -207,6 +217,22 @@ export const getExpensesByDuration = async (durationInMonths) => {
     console.error("Error fetching expenses:", error);
     throw error;
   }
+};
+
+export const getExpensesByDates = async (startDate, currentDate) => {
+  const queryForIncome = query(
+    collection(db, "wallets"),
+    where("date", ">=", startDate),
+    where("date", "<=", currentDate)
+  );
+  const queryForExpense = query(
+    collection(db, "expenses"),
+    where("date", ">=", startDate),
+    where("date", "<=", currentDate)
+  );
+
+  const response = await getIncomesAndExpenses(queryForExpense, queryForIncome);
+  return response;
 };
 
 export const getCustomerName = async (docId) => {
@@ -222,3 +248,17 @@ export const getCustomerName = async (docId) => {
     console.error(e);
   }
 };
+
+export const getInitialDataForExpensePage = cache(async () => {
+  const item = await getExpensesByDuration(1);
+  return item;
+});
+
+// export async function getStaticProps() {
+//   // Fetch data from external API
+//   const res = await getExpensesByDuration(1);
+//   const data = res;
+//   console.log(data);
+//   // Pass data to the page via props
+//   return { props: { data } };
+// }

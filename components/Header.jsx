@@ -27,7 +27,6 @@ function Header() {
         </div>
         <div className="flex items-center space-x-4">
           <Expense />
-          {/* <Logout /> */}
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>
