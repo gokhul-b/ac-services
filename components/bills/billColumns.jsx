@@ -12,9 +12,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { deleteBill, deleteRecord } from "@/app/action";
+import { format } from "date-fns";
 export const billColumns = [
   {
     accessorKey: "date",
+    cell: ({ row }) => {
+      const date = row.getValue("date");
+      let modified = format(
+        new Date(date).toLocaleString("en-US", {
+          timeZone: "Asia/Kolkata",
+        }),
+        "dd-MM-yyyy"
+      );
+
+      return <div>{modified}</div>;
+    },
     header: ({ column }) => {
       return (
         <Button

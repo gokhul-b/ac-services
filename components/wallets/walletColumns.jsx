@@ -12,9 +12,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { format } from "date-fns";
 export const walletColumns = [
   {
     accessorKey: "date",
+    cell: ({ row }) => {
+      const date = row.getValue("date");
+      let modified = format(
+        new Date(date).toLocaleString("en-US", {
+          timeZone: "Asia/Kolkata",
+        }),
+        "dd-MM-yyyy"
+      );
+
+      return <div>{modified}</div>;
+    },
     header: ({ column }) => {
       return (
         <Button
